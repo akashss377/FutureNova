@@ -414,3 +414,109 @@ img { max-width: 100%; display: block; }
   height: 100%;
   object-fit: cover;
 }
+
+/* ============================================================
+   UI REFINEMENT (appended; nothing above was changed)
+   1. One shared background theme   2. Mobile navbar logo
+   3. Services section: flexbox layout + polish
+   ============================================================ */
+
+/* ---------- 1. Shared background theme ----------
+   Same aqua / sky glows, soft gradient and faint wave pattern that the
+   About section already uses, applied to every other section so the
+   whole page reads as one design. Gradient starts and ends on white so
+   neighbouring sections (and the About section's white wave) blend. */
+:root {
+  --theme-bg:
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='96' height='48' viewBox='0 0 96 48'%3E%3Cpath d='M0 24 Q24 6 48 24 T96 24' fill='none' stroke='%230fa3a3' stroke-opacity='0.07' stroke-width='1.2'/%3E%3C/svg%3E") 0 0 / 96px 48px repeat,
+    radial-gradient(900px 520px at 88% 300px, rgba(94, 224, 232, 0.24), transparent 62%),
+    radial-gradient(820px 620px at 2% calc(100% - 300px), rgba(125, 190, 250, 0.22), transparent 64%),
+    linear-gradient(180deg, #ffffff 0%, #eaf6fa 50%, #ffffff 100%);
+}
+.section,
+.section-tint,
+#contact.contact-premium {
+  background: var(--theme-bg);
+}
+
+/* ---------- 2. Mobile / tablet navbar logo ----------
+   The logo image sat centred inside a 230px-wide box, so it floated away
+   from the left edge. Size it to the logo itself and pin it left.
+   Only applies where the hamburger menu is used; desktop is untouched. */
+@media (max-width: 991px) {
+  .brand { flex: 0 0 auto; margin-right: auto; align-self: center; }
+  .brand-logo {
+    width: 62px;
+    height: 62px;
+    max-height: 62px;
+    object-fit: contain;
+    object-position: left center;
+  }
+}
+@media (max-width: 575px) {
+  .brand-logo { width: 56px; height: 56px; max-height: 56px; }
+}
+
+/* ---------- 3. Services section ---------- */
+#services .row {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;      /* a short last row stays centred */
+  align-items: stretch;         /* every card in a row is the same height */
+}
+#services .row > .reveal { display: flex; }   /* column wrapper -> flex container */
+
+.service-detail-card {
+  --card-pad: 1.8rem;
+  flex: 1 1 auto;
+  width: 100%;
+  height: auto;                 /* flex stretch handles equal heights */
+  padding: var(--card-pad);
+  border-radius: 20px;
+  border: 1px solid var(--line);
+  box-shadow: 0 6px 18px rgba(11, 37, 69, 0.05);
+  transition: transform 0.35s cubic-bezier(0.2, 0.7, 0.2, 1),
+              box-shadow 0.35s ease, border-color 0.35s ease;
+}
+.service-detail-card:hover,
+.service-detail-card:focus-within {
+  transform: translateY(-6px);
+  border-color: rgba(15, 163, 163, 0.45);
+  box-shadow: 0 22px 40px -16px rgba(11, 37, 69, 0.22), 0 0 0 1px rgba(15, 163, 163, 0.12);
+}
+.service-detail-card .service-card-image {
+  width: calc(100% + (var(--card-pad) * 2));
+  margin: calc(var(--card-pad) * -1) calc(var(--card-pad) * -1) 1.4rem;
+}
+.service-detail-card .service-card-image img {
+  transition: transform 0.7s cubic-bezier(0.2, 0.7, 0.2, 1);
+}
+.service-detail-card:hover .service-card-image img { transform: scale(1.06); }
+
+.service-detail-card .icon-tile { transition: transform 0.3s ease, background 0.3s ease, color 0.3s ease; }
+.service-detail-card:hover .icon-tile { background: var(--accent); color: var(--white); transform: translateY(-2px); }
+
+.service-detail-card h3 { transition: color 0.25s ease; }
+.service-detail-card:hover h3 { color: var(--teal-dark); }
+.service-detail-card p { flex: 1 0 auto; margin-bottom: 0; }   /* pushes price/button row to the bottom */
+
+.service-detail-card .service-card-bottom { margin-top: 0; }
+.service-detail-card .btn-fn { transition: transform 0.2s ease, background 0.2s ease, box-shadow 0.2s ease; }
+.service-detail-card .btn-fn:hover { box-shadow: 0 8px 18px rgba(15, 163, 163, 0.35); }
+
+@media (max-width: 575px) {
+  .service-detail-card { --card-pad: 1.3rem; border-radius: 18px; }
+  .service-detail-card .btn-fn { width: 100%; justify-content: center; }
+}
+@media (hover: none) {
+  /* touch screens: no sticky hover lift */
+  .service-detail-card:hover { transform: none; }
+  .service-detail-card:hover .service-card-image img { transform: none; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .service-detail-card,
+  .service-detail-card * { transition: none !important; }
+  .service-detail-card:hover,
+  .service-detail-card:focus-within,
+  .service-detail-card:hover .service-card-image img { transform: none; }
+}
