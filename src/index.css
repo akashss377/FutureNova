@@ -557,3 +557,44 @@ img { max-width: 100%; display: block; }
     letter-spacing: 1.2px;
   }
 }
+
+/* Fix booking form alignment on mobile */
+.booking-form .field {
+  width: 100%;
+  min-width: 0;
+}
+
+.booking-form input,
+.booking-form select,
+.booking-form textarea {
+  width: 100%;
+  max-width: 100%;
+  box-sizing: border-box;
+}
+
+.booking-form input[type="date"] {
+  display: block;
+  min-width: 0;
+  height: 48px;
+  padding: 10px 12px;
+  text-align: left;
+  -webkit-appearance: none;
+  appearance: none;
+}
+
+@media (max-width: 576px) {
+  .booking-form .row {
+    margin-left: 0;
+    margin-right: 0;
+  }
+
+  .booking-form .row > .field {
+    padding-left: 0;
+    padding-right: 0;
+  }
+
+  .booking-form input[type="date"] {
+    width: 100%;
+    font-size: 14px;
+  }
+}
