@@ -23,8 +23,9 @@ export default function Navbar() {
         </a>
 
         <a href="#home" className="mobile-brand-name" onClick={close}>
-          FutureNova
-        </a>
+  <span className="brand-title">Future Nova</span>
+  <span className="brand-subtitle">CLEANING SERVICE</span>
+</a>
 
         <nav
           className={`nav-links ${open ? "is-open" : ""}`}
